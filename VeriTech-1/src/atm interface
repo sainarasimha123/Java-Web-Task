@@ -1,4 +1,3 @@
-//To create a more comprehensive ATM interface program, we can expand the functionalities and add features such as user authentication, account management, transaction history, and more. Below is an updated version of the ATM interface program in Java:
 
 import java.util.Scanner;
 
@@ -127,9 +126,4 @@ public class ATMInterface {
         } while (choice != 4);
     }
 }
-This updated version includes:
 
-User authentication with a username and PIN.
-Additional features such as logging in and out.
-Improved user experience with clearer prompts and messages.
-The ability to deposit and withdraw money securely.
