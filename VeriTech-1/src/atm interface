@@ -1,0 +1,135 @@
+//To create a more comprehensive ATM interface program, we can expand the functionalities and add features such as user authentication, account management, transaction history, and more. Below is an updated version of the ATM interface program in Java:
+
+import java.util.Scanner;
+
+class User {
+    private String username;
+    private String pin;
+    private double balance;
+
+    public User(String username, String pin, double balance) {
+        this.username = username;
+        this.pin = pin;
+        this.balance = balance;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public boolean verifyPin(String pin) {
+        return this.pin.equals(pin);
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void deposit(double amount) {
+        balance += amount;
+    }
+
+    public boolean withdraw(double amount) {
+        if (amount > balance) {
+            System.out.println("Insufficient funds");
+            return false;
+        } else {
+            balance -= amount;
+            System.out.println("Please take your cash");
+            return true;
+        }
+    }
+}
+
+public class ATMInterface {
+    private static final String USERNAME = "user123";
+    private static final String PIN = "1234";
+    private static final double INITIAL_BALANCE = 1000.0;
+
+    private static User currentUser;
+
+    public static void main(String[] args) {
+        // Initialize ATM with a user
+        currentUser = new User(USERNAME, PIN, INITIAL_BALANCE);
+
+        // Main menu loop
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+
+        do {
+            System.out.println("ATM Menu:");
+            System.out.println("1. Login");
+            System.out.println("2. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    login(scanner);
+                    break;
+                case 2:
+                    System.out.println("Thank you for using the ATM. Goodbye!");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        } while (choice != 2);
+
+        scanner.close();
+    }
+
+    private static void login(Scanner scanner) {
+        System.out.print("Enter username: ");
+        String username = scanner.next();
+        System.out.print("Enter PIN: ");
+        String pin = scanner.next();
+
+        if (currentUser.getUsername().equals(username) && currentUser.verifyPin(pin)) {
+            showLoggedInMenu(scanner);
+        } else {
+            System.out.println("Invalid username or PIN. Please try again.");
+        }
+    }
+
+    private static void showLoggedInMenu(Scanner scanner) {
+        int choice;
+
+        do {
+            System.out.println("\nWelcome, " + currentUser.getUsername() + "!");
+            System.out.println("1. Check Balance");
+            System.out.println("2. Deposit");
+            System.out.println("3. Withdraw");
+            System.out.println("4. Logout");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.println("Your balance is: $" + currentUser.getBalance());
+                    break;
+                case 2:
+                    System.out.print("Enter amount to deposit: $");
+                    double depositAmount = scanner.nextDouble();
+                    currentUser.deposit(depositAmount);
+                    System.out.println("Deposit successful");
+                    break;
+                case 3:
+                    System.out.print("Enter amount to withdraw: $");
+                    double withdrawAmount = scanner.nextDouble();
+                    currentUser.withdraw(withdrawAmount);
+                    break;
+                case 4:
+                    System.out.println("Logging out...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        } while (choice != 4);
+    }
+}
+This updated version includes:
+
+User authentication with a username and PIN.
+Additional features such as logging in and out.
+Improved user experience with clearer prompts and messages.
+The ability to deposit and withdraw money securely.
